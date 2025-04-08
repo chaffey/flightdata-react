@@ -1,5 +1,4 @@
 // src/App.js
-import Metar from './components/Metar';
 import Airport from './components/Airport';
 
 function App() {
