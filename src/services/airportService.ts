@@ -8,6 +8,6 @@ export interface AirportResponse {
 }
 
 export const fetchAirport = async (icaoCode: string) : Promise <AirportResponse> => {
-  const response = await api.get(`/airport/${icaoCode}`);
+  const response = await api.get(`/full/${icaoCode}`);
   return response.data;
 };

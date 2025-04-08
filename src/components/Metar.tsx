@@ -1,98 +1,64 @@
-import { FormEvent, useState } from 'react';
-import { fetchMetar } from '../services/metarService';
-import { Button, TextField, Table, TableContainer, TableRow, TableCell } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Table, TableContainer, TableRow, TableCell, Typography } from '@mui/material';
+import { hPaToInHg } from  '../utils/convert'
+import { Clouds } from './Clouds';
 
-interface MetarData {
-  [key: string]: any;
+export interface MetarData {
+    metarData: any;
+    [key: string]: any;
 }
 
-function hPaToInHg(hPa: number) {
-  return (hPa * 0.029529980164712).toFixed(2);
-}
+export function Metar({metarData}: MetarData) {
+    return (
+        <div style={{ margin: '0px'}}>
 
-function mToFt(m: number) {
-  return (m * 3.2808398950131).toFixed(0);
-}
-
-export default function Metar() {
-  const [icao, setIcao] = useState('');
-  const [metarData, setMetarData] = useState<MetarData | null>(null);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const data = await fetchMetar(icao) as MetarData;
-    setMetarData(data);
-  };
-
-  return (
-    <div>
-    <form onSubmit={handleSubmit}>
-    <Accordion>
-        <AccordionSummary
-          expandIcon={<ArrowDropDownIcon />}
-          aria-controls="panel1a-content"
-          id="panel1-header">
-          <TextField
-              value={icao}
-              onChange={(e) => setIcao(e.target.value.toUpperCase())}
-              placeholder="Enter ICAO code"
-              variant="outlined"
-              size="small"
-              style={{ marginRight: '8px' }}
-            />
-            <Button variant="contained" type='submit'>Get METAR</Button>
-        </AccordionSummary>
-        <AccordionDetails>
-          {metarData && (
-            <TableContainer>
-              <Table>
-                <TableRow>
-                  <TableCell width={160} align='right'>Time (UTC):</TableCell>
-                  <TableCell>{metarData.reportTime}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Name:</TableCell>
-                  <TableCell>{metarData.name}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>ICAO:</TableCell>
-                  <TableCell>{metarData.icaoId}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Wind: </TableCell>
-                  <TableCell>{metarData.wspd} at {String(metarData.wdir).padStart(3, '0')}º</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Temperature (ºc):</TableCell>
-                  <TableCell>{Math.round(metarData.temp)}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Dew Point (ºc):</TableCell>
-                  <TableCell>{Math.round(metarData.dewp)}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Altimeter:</TableCell>
-                  <TableCell>{hPaToInHg(metarData.altim)} inHg / {Math.round(metarData.altim)} hPa</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Elevation (ft):</TableCell>
-                  <TableCell>{mToFt(metarData.elev)}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align='right'>Raw:</TableCell>
-                  <TableCell width={600}>{metarData.rawOb}</TableCell>
-                </TableRow>
-              </Table>
-            </TableContainer>              
-          )}
-        </AccordionDetails>
-      </Accordion>
-      </form>
-      </div>
-  );
+            {metarData && (
+                <TableContainer>
+                    <Table>
+                        <TableRow>
+                            <TableCell align='right'>Name:</TableCell>
+                            <TableCell><Typography>{metarData.name}</Typography></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell width={160} align='right'>Report Time (UTC):</TableCell>
+                            <TableCell>{metarData.reportTime}</TableCell>                            
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>ICAO:</TableCell>
+                            <TableCell>{metarData.icaoId}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Altimeter:</TableCell>
+                            <TableCell><Typography color={'secondary'}>{hPaToInHg(metarData.altim)} inHg / {Math.round(metarData.altim)} hPa</Typography></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Wind: </TableCell>
+                            <TableCell><Typography color={'secondary'}>{metarData.wspd} at {String(metarData.wdir).padStart(3, '0')}º</Typography></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Temperature:</TableCell>
+                            <TableCell><Typography color={'secondary'}>{Math.round(metarData.temp)}ºc</Typography></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Dew Point:</TableCell>
+                            <TableCell>{Math.round(metarData.dewp)}ºc</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Visibility:</TableCell>
+                            <TableCell>{metarData.visib}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Clouds:</TableCell>
+                            <TableCell>
+                                <Clouds clouds={metarData.clouds} />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell align='right'>Raw:</TableCell>
+                            <TableCell width={300}>{metarData.rawOb}</TableCell>
+                        </TableRow>
+                    </Table>
+                </TableContainer>
+            )}                    
+        </div>
+    );
 }

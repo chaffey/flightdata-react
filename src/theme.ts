@@ -2,16 +2,33 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#3f51b5', // Blue
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#147382', // Blue
+        },
+        secondary: {
+            main: '#fcdf52', // Pink
+        },
+        background: {
+            default: '#2f3235', // Dark background
+            paper: '#1e1e1e', // Dark paper
+        },
     },
-    secondary: {
-      main: '#f50057', // Pink
-    },
-  },
-});
+    components: {
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    verticalAlign: 'top',
+                    border: 'none',
+                    padding: '0px 20px 20px 0',
+                    margin: '0'
+                }
+            }
+        }
+    }
+
+    });
 
 export default theme;
 

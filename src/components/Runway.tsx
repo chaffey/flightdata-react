@@ -1,22 +1,18 @@
-import React from "react";
+import { TableRow, TableCell } from '@mui/material';
 
-// Define the type for the runway prop
-interface RunwayProps {
-  runway: {
-    id: number;
-    alignment: string;
-    surface: string;
-  };
+export interface RunwayData {
+    id: string;
+    alignment: number;
+    dimension: string;
 }
 
-const Runway: React.FC<RunwayProps> = ({ runway }) => {
-  return (
-    <div className="border p-4 rounded shadow mb-2">
-      <h2 className="text-lg font-semibold">Runway {runway.id}</h2>
-      <p>Length: {runway.alignment} ft</p>
-      <p>Surface: {runway.surface}</p>
-    </div>
-  );
-};
+export function Runway({id, alignment, dimension} : RunwayData) {
+    return (
+        <TableRow>
+            <TableCell width={100} align='left'>{id}</TableCell>
+            <TableCell width={100} align='left'>{String(alignment).padStart(3, '0')}º / {String(alignment + 180).padStart(3, '0')}º</TableCell>
+            <TableCell align='left'>{dimension}</TableCell>
+        </TableRow>
+    );
+}
 
-export default Runway;
