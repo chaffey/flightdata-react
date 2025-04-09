@@ -1,6 +1,7 @@
 import { Table, TableContainer, TableRow, TableCell, Typography } from '@mui/material';
 import { hPaToInHg } from  '../utils/convert'
 import { Clouds } from './Clouds';
+import { TempLabel } from './TempLabel';
 
 export interface MetarData {
     metarData: any;
@@ -32,15 +33,15 @@ export function Metar({metarData}: MetarData) {
                         </TableRow>
                         <TableRow>
                             <TableCell align='right'>Wind: </TableCell>
-                            <TableCell><Typography color={'secondary'}>{metarData.wspd} at {String(metarData.wdir).padStart(3, '0')}º</Typography></TableCell>
+                            <TableCell><Typography color={'secondary'}>{metarData.wspd}kts at {String(metarData.wdir).padStart(3, '0')}º</Typography></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell align='right'>Temperature:</TableCell>
-                            <TableCell><Typography color={'secondary'}>{Math.round(metarData.temp)}ºc</Typography></TableCell>
+                            <TableCell><TempLabel cel={metarData.temp}/></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell align='right'>Dew Point:</TableCell>
-                            <TableCell>{Math.round(metarData.dewp)}ºc</TableCell>
+                            <TableCell><TempLabel cel={metarData.dewp}/></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell align='right'>Visibility:</TableCell>

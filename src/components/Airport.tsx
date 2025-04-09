@@ -28,7 +28,7 @@ export default function Airport() {
     };
 
     return (
-        <div style={{ margin: '20px'}}>
+        <div style={{ margin: '20px' }}>
             <form onSubmit={handleSubmit}>
                 <table>
                     <tr>
@@ -45,14 +45,12 @@ export default function Airport() {
                             <Button variant="contained" type='submit'>Get Airport</Button>
                         </td>
                     </tr>
-                    <tr>
-                        <td style={{ verticalAlign: 'top', padding: '0', margin: '0' }}>
-                            {airportData && (
+                    {airportData && (
+                        <tr>
+                            <td style={{ verticalAlign: 'top', padding: '0', margin: '0' }}>
                                 <Metar metarData={airportData.metar} />
-                            )}
-                        </td>
-                        <td style={{ verticalAlign: 'top', borderLeft: "1px solid rgb(200, 200, 200)" }}>
-                            {airportData && (
+                            </td>
+                            <td style={{ verticalAlign: 'top', borderLeft: "1px solid rgb(200, 200, 200)" }}>
                                 <TableContainer>
                                     <Table>
                                         <TableBody>
@@ -104,11 +102,11 @@ export default function Airport() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-                            )}
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    )}
                 </table>
-                </form>
+            </form>
         </div>
     );
 }

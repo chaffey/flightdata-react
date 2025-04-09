@@ -5,10 +5,10 @@ const theme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#147382', // Blue
+            main: '#147382',
         },
         secondary: {
-            main: '#fcdf52', // Pink
+            main: '#fcdf52',
         },
         background: {
             default: '#2f3235', // Dark background
