@@ -4,6 +4,7 @@ import { Button, TextField, Table, TableContainer, TableRow, TableCell, TableBod
 import { Runway, RunwayData } from './Runway';
 import { mToFt, parseCoordinate } from '../utils/convert';
 import { Metar } from './Metar';
+import { CompassDial } from './CompassDial';
 
 interface AirportData {
     [key: string]: any;
