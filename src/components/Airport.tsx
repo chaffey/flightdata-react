@@ -20,12 +20,17 @@ export default function Airport() {
     const [offset, setOffset] = useState(0);
 
     const handleSubmit = async (e: FormEvent) => {
+        var data;
         e.preventDefault();
-        const data = await fetchAirport(icao) as AirportData;
-        setAirportData(data);
-        setRunways(data.runways)
-        setOffset(parseCoordinate(data.magdec));
-        console.log("Offset: " + offset)
+        try {
+            data = await fetchAirport(icao) as AirportData;
+            setAirportData(data);
+            setRunways(data.runways)
+            setOffset(parseCoordinate(data.magdec));
+        } catch(error) {
+            setAirportData(null);
+            return;
+        }
     };
 
     return (

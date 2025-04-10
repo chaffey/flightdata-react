@@ -5,8 +5,6 @@ export interface CloudData {
 }
 
 export function Clouds({clouds}: CloudData) {
-    console.log({clouds});
-    
     return (
         <div style={{ margin: '0px'}}>
 
