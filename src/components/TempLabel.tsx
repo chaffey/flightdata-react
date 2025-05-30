@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 
-export function TempLabel({cel}: {cel: number}) {
+export function TempLabel({cel, color}: {cel: number, color?: string}) {
     return (
-        <Typography>
+        <Typography color={color}>
             {cel}ºC ({Math.round((cel * 9) / 5 + 32)}ºF)
         </Typography>
     );
